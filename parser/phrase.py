@@ -20,8 +20,8 @@ class Composite(Phrase):
 
 
 class Leaf(Phrase):
-    def __init__(self):
-        self.value: float = 0
+    def __init__(self, value:float):
+        self.value: float = value
 
     def get_value(self):
         return self.value

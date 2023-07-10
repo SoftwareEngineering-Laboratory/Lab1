@@ -16,7 +16,7 @@ class Composite(Phrase):
         self.operator = operator
 
     def get_value(self):
-            return self.operator(self.left_phrase.get_value(), self.right_phrase.get_value())
+        return self.operator(self.left_phrase.get_value(), self.right_phrase.get_value())
 
 
 class Leaf(Phrase):

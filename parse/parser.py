@@ -106,3 +106,8 @@ def generate_phrase_tree(phrase: str) -> Phrase:
         phrase_of_leafs = remove_inner_parentheses(phrase_of_leafs)
     final_phrase = convert_to_phrase(phrase_of_leafs)
     return final_phrase
+
+
+def get_value_phrase(input_phrase: str) -> float:
+    phrase: Phrase = generate_phrase_tree(input_phrase)
+    return phrase.get_value()

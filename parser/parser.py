@@ -103,3 +103,6 @@ def generate_phrase_tree(phrase: str) -> Phrase:
     phrase_of_leafs = ["("] + convert_numbers_to_leaf(list(phrase)) + [")"]
     while "(" in phrase_of_leafs:
         phrase_of_leafs = remove_inner_parentheses(phrase_of_leafs)
+
+def calculate_phrase(input_phrase:str) -> float:
+    return 0

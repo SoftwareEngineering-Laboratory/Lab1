@@ -70,6 +70,8 @@ def break_operand(operand):
 
 
 def convert_to_phrase(operand):
+    if len(operand) == 0:
+        return Leaf(0)
     if len(operand) == 1:
         return operand[0]
     elif len(operand) == 2:
@@ -97,11 +99,30 @@ def remove_inner_parentheses(phrase):
             end_index = i
             break
         i += 1
-    return phrase[:start_index] + [convert_to_phrase(phrase[start_index + 1:end_index])] + phrase[end_index+1:]
+    return phrase[:start_index] + [convert_to_phrase(phrase[start_index + 1:end_index])] + phrase[end_index + 1:]
+
+
+def compose_plus_minus(phrase_of_leafs):
+    i = 0
+    new_phrase = []
+    while i + 2 < len(phrase_of_leafs):
+        if phrase_of_leafs[i] in ['*', '/', '-', '+'] and phrase_of_leafs[i + 1] in ['+', '-']:
+            composite = Composite(Leaf(-1 if phrase_of_leafs[i + 1] == '-' else 1), phrase_of_leafs[i + 2],
+                                  get_function('*'))
+            new_phrase.append(phrase_of_leafs[i])
+            new_phrase.append(composite)
+            i += 2
+        else:
+            new_phrase.append(phrase_of_leafs[i])
+        i += 1
+
+    new_phrase = new_phrase + phrase_of_leafs[i:]
+    return new_phrase
 
 
 def generate_phrase_tree(phrase: str) -> Phrase:
     phrase_of_leafs = ["("] + convert_numbers_to_leaf(list(phrase)) + [")"]
+    phrase_of_leafs = compose_plus_minus(phrase_of_leafs)
     while "(" in phrase_of_leafs:
         phrase_of_leafs = remove_inner_parentheses(phrase_of_leafs)
     final_phrase = convert_to_phrase(phrase_of_leafs)
